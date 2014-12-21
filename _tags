@@ -1,0 +1,50 @@
+# OASIS_START
+# DO NOT EDIT (digest: 1cf612138db751dffa82179341e29f83)
+# Ignore VCS directories, you can use the same kind of rule outside
+# OASIS_START/STOP if you want to exclude directories that contains
+# useless stuff for the build process
+true: annot, bin_annot
+<**/.svn>: -traverse
+<**/.svn>: not_hygienic
+".bzr": -traverse
+".bzr": not_hygienic
+".hg": -traverse
+".hg": not_hygienic
+".git": -traverse
+".git": not_hygienic
+"_darcs": -traverse
+"_darcs": not_hygienic
+# Library nanovg_ocaml
+"src/nanovg_ocaml.cmxs": use_nanovg_ocaml
+<src/*.ml{,i,y}>: oasis_library_nanovg_ocaml_ccopt
+"src/ffi_generated_stubs.c": oasis_library_nanovg_ocaml_ccopt
+<src/nanovg_ocaml.{cma,cmxa}>: oasis_library_nanovg_ocaml_cclib
+"src/libnanovg_ocaml_stubs.lib": oasis_library_nanovg_ocaml_cclib
+"src/dllnanovg_ocaml_stubs.dll": oasis_library_nanovg_ocaml_cclib
+"src/libnanovg_ocaml_stubs.a": oasis_library_nanovg_ocaml_cclib
+"src/dllnanovg_ocaml_stubs.so": oasis_library_nanovg_ocaml_cclib
+<src/nanovg_ocaml.{cma,cmxa}>: use_libnanovg_ocaml_stubs
+<src/*.ml{,i,y}>: package(ctypes)
+<src/*.ml{,i,y}>: package(threads)
+"src/ffi_generated_stubs.c": package(ctypes)
+"src/ffi_generated_stubs.c": package(ctypes.stubs)
+"src/ffi_generated_stubs.c": package(threads)
+# Executable ffi_stubgen
+"src/ffi_stubgen.byte": package(ctypes.stubs)
+<src/*.ml{,i,y}>: package(ctypes.stubs)
+# Executable example_gles3
+"examples/example_gles3.native": oasis_executable_example_gles3_cclib
+"examples/example_gles3.native": package(ctypes)
+"examples/example_gles3.native": package(ctypes.foreign)
+"examples/example_gles3.native": package(ctypes.stubs)
+"examples/example_gles3.native": package(threads)
+"examples/example_gles3.native": use_nanovg_ocaml
+<examples/*.ml{,i,y}>: package(ctypes)
+<examples/*.ml{,i,y}>: package(ctypes.foreign)
+<examples/*.ml{,i,y}>: package(ctypes.stubs)
+<examples/*.ml{,i,y}>: package(threads)
+<examples/*.ml{,i,y}>: use_nanovg_ocaml
+# OASIS_STOP
+
+<lib/**> : not_hygienic
+<examples/example_gles3.native> : link_with_nanovg

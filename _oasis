@@ -1,0 +1,46 @@
+OASISFormat:        0.4
+OCamlVersion:       >= 4.02.1
+Name:               nanovg-ocaml
+Version:            1.0
+Synopsis:           OCaml bindings to NanoVG
+Authors:            Paolo Donadeo <p.donadeo@4sigma.it>
+Maintainers:        Paolo Donadeo <p.donadeo@4sigma.it>
+License:            MIT
+BuildTools:         ocamlbuild
+Plugins:            META (0.4), DevFiles (0.4)
+PreBuildCommand:    ./build_nanovg.sh
+
+Description:
+  NanoVG is small antialiased vector graphics rendering library for OpenGL. It
+  has lean API modeled after HTML5 canvas API. It is aimed to be a practical and
+  fun toolset for building scalable user interfaces and visualizations.
+  .
+  This library provides an OCaml binding to NanoVG
+
+Library nanovg_ocaml
+  Path:           src
+  FindlibName:    nanovg-ocaml
+  Pack:           false
+  Modules:        Nvg,
+                  Ffi_bindings,
+                  Ffi_generated
+  CSources:       ffi_generated_stubs.c
+  BuildDepends:   ctypes, ctypes.stubs, threads
+  CCOpt:          -I$pkg_ctypes/..
+  CCLib:          -lglfw -lGL -lGLU -lm -lGLEW
+
+Executable ffi_stubgen
+  MainIs:       ffi_stubgen.ml
+  Install:      false
+  Build:        false
+  Path:         src
+  BuildDepends: ctypes.stubs
+
+Executable example_gles3
+  MainIs:         example_gles3.ml
+  Install:        false
+  Build:          true
+  CompiledObject: native
+  Path:           examples
+  CCLib:          -lglfw -lGL -lGLU -lm -lGLEW
+  BuildDepends:   ctypes, ctypes.stubs, ctypes.foreign, nanovg-ocaml, threads
