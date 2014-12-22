@@ -1,0 +1,13 @@
+PRJ ocaml-nanovg
+
+S examples
+S src
+
+B _build
+B _build/examples
+B _build/src
+
+PKG ctypes
+PKG ctypes.foreign
+PKG ctypes.stubs
+PKG threads
