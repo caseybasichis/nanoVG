@@ -1,6 +1,8 @@
 open Glfw3
 open GLFW
 
+module Ct = Ctypes
+
 let errorcb error desc =
   Printf.printf "GLFW error %d: %s\n" error desc
 
@@ -20,6 +22,7 @@ let key window key scancode action mods =
   end
 
 let () =
+  let fps = Ct.make Perf.perfGraph in
   let prevt = ref 0.0 in
 
   if glfwInit () = false then begin
@@ -27,7 +30,7 @@ let () =
     exit (-1)
   end;
 
-  let fps = Perf.initGraph Perf.default_perf_graph Perf.GRAPH_RENDER_FPS "Frame Time" in
+  Perf.initGraph (Ct.addr fps) Perf.GRAPH_RENDER_FPS "Frame Time" |> ignore;
 
   glfwSetErrorCallback errorcb |> ignore;
 
@@ -37,8 +40,8 @@ let () =
 
   let window =
     glfwCreateWindow 1000 600 "NanoVG"
-      (Ctypes.from_voidp GLFW.monitor Ctypes.null)
-      (Ctypes.from_voidp GLFW.window Ctypes.null) in
+      (Ct.from_voidp GLFW.monitor Ct.null)
+      (Ct.from_voidp GLFW.window Ct.null) in
 
   match window with
   | None -> (glfwTerminate (); exit (-1))
@@ -46,7 +49,12 @@ let () =
       glfwSetKeyCallback window key |> ignore;
       glfwMakeContextCurrent window;
       let open Nvg in
-	    let vg = Nvg.createGLES3 (Nvg.antialias lor Nvg.stencil_strokes lor Nvg.debug) in
+      let vg =
+        try Nvg.createGLES3 (Nvg.antialias lor Nvg.stencil_strokes lor Nvg.debug)
+        with Nvg.Memory_error -> begin
+            Printf.printf "Could not init nanovg.\n%!";
+            exit (-1)
+          end in
 
       Unix.sleep 120;
       Printf.printf "Sono arrivato qui\n%!"

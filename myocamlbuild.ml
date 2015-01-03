@@ -676,6 +676,16 @@ let print_info f =
     "@[<hv 2>Tags for file %s:@ %a@]@." f
     Tags.print (tags_of_pathname f)
 
+let cp_p src dest = Cmd (S [A"cp"; A"-p"; P src; Px dest])
+
+let copy_rule name ?insert src dest =
+  rule name ?insert ~prod:dest ~dep:src
+    begin fun env _ ->
+      let src = env src and dest = env dest in
+      Ocamlbuild_pack.Shell.mkdir_p (Pathname.dirname dest);
+      cp_p src dest
+    end
+
 let my_dispatch = function
   | After_rules ->
     rule "generated ml"
@@ -690,6 +700,7 @@ let my_dispatch = function
       (fun _ _ ->
          Cmd(S[P"src/ffi_stubgen.byte"; A"-c"; Sh">"; A"src/ffi_generated_stubs.c"]));
 
+
     dep ["link_with_nanovg"] ["lib/libnanovg.a"];
 
     flag ["link"; "program"; "native"; "link_with_nanovg"; "ocaml"]
@@ -697,6 +708,22 @@ let my_dispatch = function
 
     copy_rule "Copy libnanovg.a into lib/" ~insert:`top
       "lib/nanovg/build/libnanovg.a" "lib/libnanovg.a";
+
+    flag ["link"; "program"; "native"; "link_examples_objs"; "ocaml"]
+      (S[ A"-cclib";
+          A"-Wl,--whole-archive";
+          A"lib/perf.o";
+          A"-cclib";
+          A"-Wl,--no-whole-archive";
+          A"-cclib";
+          A"-Wl,-E";
+        ]);
+
+    copy_rule "Copy .o files for the examples" ~insert:`top
+      "lib/nanovg/build/obj/Release/example_gles3/perf.o" "lib/perf.o";
+
+    Sys.command "mkdir -p _build/lib" |> ignore;
+    Sys.command "cp -a lib/nanovg/build/obj/Release/example_gles3/perf.o _build/lib/perf.o" |> ignore;
   | _ -> ()
 
 let () =

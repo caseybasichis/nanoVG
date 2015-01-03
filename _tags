@@ -47,4 +47,4 @@ true: annot, bin_annot
 # OASIS_STOP
 
 <lib/**> : not_hygienic
-<examples/example_gles3.native> : link_with_nanovg
+<examples/example_gles3.native> : link_with_nanovg, link_examples_objs
