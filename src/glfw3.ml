@@ -19,7 +19,7 @@ struct
 
   let errorfun = int @-> string @-> returning void
   let keyfun = ptr window @-> int @-> int @-> int @-> int @-> returning void
-                                              
+
   let client_api = 0x00022001
   let context_version_major = 0x00022002
   let context_version_minor = 0x00022003
@@ -45,20 +45,52 @@ let glfwSetWindowShouldClose window value =
 let glfwInit_stub = foreign "glfwInit" (void @-> returning int)
 
 let glfwInit () = glfwInit_stub () |> bool_of_int
-                    
+
 let glfwSetErrorCallback =
   foreign "glfwSetErrorCallback" (funptr GLFW.errorfun @-> returning (funptr GLFW.errorfun))
 
 let glfwWindowHint = foreign "glfwWindowHint" (int @-> int @-> returning void)
-    
+
 let glfwCreateWindow =
   foreign "glfwCreateWindow"
     (int @-> int @-> string @-> ptr GLFW.monitor @-> ptr GLFW.window @-> returning (ptr_opt GLFW.window))
 
 let glfwTerminate = foreign "glfwTerminate" (void @-> returning void)
-    
+
 let glfwSetKeyCallback =
   foreign "glfwSetKeyCallback" (ptr GLFW.window @-> funptr GLFW.keyfun @-> returning (funptr GLFW.keyfun))
-    
+
 let glfwMakeContextCurrent =
   foreign "glfwMakeContextCurrent" (ptr GLFW.window @-> returning void)
+
+let glfwSwapInterval =
+  foreign "glfwSwapInterval" (int @-> returning void)
+
+let glfwSetTime =
+  foreign "glfwSetTime" (double @-> returning void)
+
+let glfwGetTime =
+  foreign "glfwGetTime" (void @-> returning double)
+
+let glfwWindowShouldClose__stub =
+  foreign "glfwWindowShouldClose" (ptr GLFW.window @-> returning int)
+
+let glfwWindowShouldClose w =
+  if glfwWindowShouldClose__stub w = 1
+  then true
+  else false
+
+let glfwGetCursorPos =
+  foreign "glfwGetCursorPos" (ptr GLFW.window @-> ptr double @-> ptr double @-> returning void)
+
+let glfwGetWindowSize =
+  foreign "glfwGetWindowSize" (ptr GLFW.window @-> ptr int @-> ptr int @-> returning void)
+
+let glfwGetFramebufferSize =
+  foreign "glfwGetFramebufferSize" (ptr GLFW.window @-> ptr int @-> ptr int @-> returning void)
+    
+let glfwSwapBuffers =
+  foreign "glfwSwapBuffers" (ptr GLFW.window @-> returning void)
+
+let glfwPollEvents =
+  foreign "glfwPollEvents" (void @-> returning void)

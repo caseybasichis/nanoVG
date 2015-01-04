@@ -22,6 +22,7 @@ let key window key scancode action mods =
   end
 
 let () =
+  let data = Ct.make Demo.demoData in
   let fps = Ct.make Perf.perfGraph in
   let prevt = ref 0.0 in
 
@@ -35,8 +36,8 @@ let () =
   glfwSetErrorCallback errorcb |> ignore;
 
   glfwWindowHint GLFW.client_api GLFW.opengl_es_api;
-	glfwWindowHint GLFW.context_version_major 3;
-	glfwWindowHint GLFW.context_version_minor 0;
+  glfwWindowHint GLFW.context_version_major 3;
+  glfwWindowHint GLFW.context_version_minor 0;
 
   let window =
     glfwCreateWindow 1000 600 "NanoVG"
@@ -48,14 +49,78 @@ let () =
   | Some window -> begin
       glfwSetKeyCallback window key |> ignore;
       glfwMakeContextCurrent window;
-      let open Nvg in
       let vg =
         try Nvg.createGLES3 (Nvg.antialias lor Nvg.stencil_strokes lor Nvg.debug)
         with Nvg.Memory_error -> begin
             Printf.printf "Could not init nanovg.\n%!";
             exit (-1)
           end in
+      if not (Demo.loadDemoData vg (Ct.addr data))
+      then exit (-1);
 
-      Unix.sleep 120;
-      Printf.printf "Sono arrivato qui\n%!"
+      glfwSwapInterval 0;
+      glfwSetTime 0.0;
+      prevt := glfwGetTime ();
+
+      while not (glfwWindowShouldClose window) do
+        let pxRatio, t, dt = ref 0.0, ref 0.0, ref 0.0 in
+        let mx = Ct.allocate Ct.double 0.0 in
+        let my = Ct.allocate Ct.double 0.0 in
+        let winWidth = Ct.allocate Ct.int 0 in
+        let winHeight = Ct.allocate Ct.int 0 in
+        let fbWidth = Ct.allocate Ct.int 0 in
+        let fbHeight = Ct.allocate Ct.int 0 in
+
+        t := glfwGetTime ();
+        dt := !t -. !prevt;
+        prevt := !t;
+        Perf.updateGraph (Ct.addr fps) !dt;
+
+        glfwGetCursorPos window mx my;
+        glfwGetWindowSize window winWidth winHeight;
+        glfwGetFramebufferSize window fbWidth fbHeight;
+        (* Calculate pixel ration for hi-dpi devices. *)
+        pxRatio := Ct.((float_of_int !@fbWidth) /. (float_of_int !@fbHeight));
+
+        (* Update and render *)
+        Ct.(Gl.glViewport 0 0 !@fbWidth !@fbHeight);
+        let () = 
+          if !premult
+          then Gl.glClearColor 0. 0. 0. 0.
+          else Gl.glClearColor 0.3 0.3 0.32 1.0 in
+        Gl.(
+          let (lor) a b = Unsigned.UInt.logor a b in
+          glClear (gl_color_buffer_bit lor gl_depth_buffer_bit lor gl_stencil_buffer_bit)
+        );
+
+        Gl.glEnable Gl.gl_blend;
+        Gl.glBlendFunc Gl.gl_src_alpha Gl.gl_one_minus_src_alpha;
+        Gl.glEnable Gl.gl_cull_face;
+        Gl.glDisable Gl.gl_depth_test;
+
+        Ct.(Nvg.beginFrame vg !@winWidth !@winHeight !pxRatio);
+
+        Ct.(
+          Demo.renderDemo vg !@mx !@my (float_of_int !@winWidth) (float_of_int !@winHeight) !t (Glfw3.int_of_bool !blowup) (addr data)
+        );
+        Perf.renderGraph vg 5. 5. (Ct.addr fps);
+
+        Nvg.endFrame vg;
+
+        Gl.glEnable Gl.gl_depth_test;
+
+        if !screenshot then begin
+          screenshot := false;
+          Ct.(Demo.saveScreenShot !@fbWidth !@fbHeight !premult "dump.png");
+        end;
+
+        glfwSwapBuffers window;
+        glfwPollEvents ();
+      done;
+
+      Demo.freeDemoData vg (Ct.addr data);
+
+      Nvg.deleteGLES3 vg;
+
+      glfwTerminate ();
     end

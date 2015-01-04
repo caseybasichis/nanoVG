@@ -710,13 +710,12 @@ let my_dispatch = function
       "lib/nanovg/build/libnanovg.a" "lib/libnanovg.a";
 
     flag ["link"; "program"; "native"; "link_examples_objs"; "ocaml"]
-      (S[ A"-cclib";
-          A"-Wl,--whole-archive";
+      (S[ A"-cclib"; A"-Wl,--whole-archive";
           A"lib/perf.o";
-          A"-cclib";
-          A"-Wl,--no-whole-archive";
-          A"-cclib";
-          A"-Wl,-E";
+          A"lib/demo.o";
+          A"-cclib"; A"-Wl,--no-whole-archive";
+          A"-cclib"; A"-Wl,-E";
+          A"-cclib"; A"-lGL";
         ]);
 
     copy_rule "Copy .o files for the examples" ~insert:`top
@@ -724,6 +723,7 @@ let my_dispatch = function
 
     Sys.command "mkdir -p _build/lib" |> ignore;
     Sys.command "cp -a lib/nanovg/build/obj/Release/example_gles3/perf.o _build/lib/perf.o" |> ignore;
+    Sys.command "cp -a lib/nanovg/build/obj/Release/example_gles3/demo.o _build/lib/demo.o" |> ignore;
   | _ -> ()
 
 let () =
