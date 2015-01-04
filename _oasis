@@ -18,16 +18,17 @@ Description:
   This library provides an OCaml binding to NanoVG
 
 Library nanovg_ocaml
-  Path:           src
-  FindlibName:    nanovg-ocaml
-  Pack:           false
-  Modules:        Nvg,
-                  Ffi_bindings,
-                  Ffi_generated
-  CSources:       ffi_generated_stubs.c
-  BuildDepends:   ctypes, ctypes.stubs, threads
-  CCOpt:          -I$pkg_ctypes/..
-  CCLib:          -lglfw -lGL -lGLU -lm -lGLEW
+  Path:             src
+  FindlibName:      nanovg-ocaml
+  Pack:             false
+  Modules:          Nvg,
+                    Ffi_bindings,
+                    Ffi_generated
+  CSources:         ffi_generated_stubs.c
+  BuildDepends:     ctypes, ctypes.stubs, threads
+  CCOpt:            -I$pkg_ctypes/..
+  CCLib:            -lglfw -lGL -lGLU -lm -lGLEW
+  XMETADescription: OCaml bindings to NanoVG
 
 Executable ffi_stubgen
   MainIs:       ffi_stubgen.ml
@@ -36,10 +37,15 @@ Executable ffi_stubgen
   Path:         src
   BuildDepends: ctypes.stubs
 
+Flag build_example
+  Description:  Build example
+  Default:      false
+
 Executable example_gles3
   MainIs:         example_gles3.ml
   Install:        false
   Build:          true
+  Build$:         flag(build_example)
   CompiledObject: native
   Path:           examples
   CCLib:          -lglfw -lGL -lGLU -lm -lGLEW
