@@ -1,5 +1,7 @@
 Session.vim
 _build/
 example_gles3.native
+gmon.out
 setup.data
 setup.log
+src/nanovg_generated.ml
