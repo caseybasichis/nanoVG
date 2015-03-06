@@ -1,5 +1,5 @@
 (* OASIS_START *)
-(* DO NOT EDIT (digest: e524842f21370ef51d393bf8f8637a0a) *)
+(* DO NOT EDIT (digest: 60c9f44e7f0654264f83c9982190704a) *)
 module OASISGettext = struct
 (* # 22 "src/oasis/OASISGettext.ml" *)
 
@@ -635,7 +635,7 @@ let package_default =
                (OASISExpr.EBool true,
                  S [A "-lglfw"; A "-lGL"; A "-lGLU"; A "-lm"; A "-lGLEW"])
             ]);
-          (["oasis_executable_example_gles3_cclib"; "link"],
+          (["oasis_executable_example_gles2_cclib"; "link"],
             [
                (OASISExpr.EBool true,
                  S
@@ -652,7 +652,7 @@ let package_default =
                       A "-lGLEW"
                    ])
             ]);
-          (["oasis_executable_example_gles3_cclib"; "ocamlmklib"; "c"],
+          (["oasis_executable_example_gles2_cclib"; "ocamlmklib"; "c"],
             [
                (OASISExpr.EBool true,
                  S [A "-lglfw"; A "-lGL"; A "-lGLU"; A "-lm"; A "-lGLEW"])
@@ -719,11 +719,11 @@ let my_dispatch = function
         ]);
 
     copy_rule "Copy .o files for the examples" ~insert:`top
-      "lib/nanovg/build/obj/Release/example_gles3/perf.o" "lib/perf.o";
+      "lib/nanovg/build/obj/Release/example_gles2/perf.o" "lib/perf.o";
 
     Sys.command "mkdir -p _build/lib" |> ignore;
-    Sys.command "cp -a lib/nanovg/build/obj/Release/example_gles3/perf.o _build/lib/perf.o" |> ignore;
-    Sys.command "cp -a lib/nanovg/build/obj/Release/example_gles3/demo.o _build/lib/demo.o" |> ignore;
+    Sys.command "cp -a lib/nanovg/build/obj/Release/example_gles2/perf.o _build/lib/perf.o" |> ignore;
+    Sys.command "cp -a lib/nanovg/build/obj/Release/example_gles2/demo.o _build/lib/demo.o" |> ignore;
   | _ -> ()
 
 let () =

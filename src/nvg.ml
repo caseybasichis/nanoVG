@@ -12,8 +12,8 @@ struct
   include Nanovg_types
 
   (* Signatures that need to be manually refined *)
-  let createGLES3 flags =
-    match Bindings.createGLES3 flags with
+  let createGLES2 flags =
+    match Bindings.createGLES2 flags with
     | Some x -> x
     | None -> raise Memory_error
 
@@ -111,7 +111,7 @@ struct
   let deleteInternal = Bindings.deleteInternal
   let internalParams = Bindings.internalParams
   let debugDumpPathCache = Bindings.debugDumpPathCache
-  let deleteGLES3 = Bindings.deleteGLES3
+  let deleteGLES2 = Bindings.deleteGLES2
   let lCreateImageFromHandle = Bindings.lCreateImageFromHandle
   let lImageHandle = Bindings.lImageHandle
 end

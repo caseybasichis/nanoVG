@@ -3,7 +3,7 @@ let prefix = "nanovg_stub"
 let prologue = "#define GLFW_INCLUDE_ES3
 #include <GLFW/glfw3.h>
 #include \"../../lib/nanovg/src/nanovg.h\"
-#define NANOVG_GLES3_IMPLEMENTATION
+#define NANOVG_GLES2_IMPLEMENTATION
 #include \"../../lib/nanovg/src/nanovg_gl.h\"
 #include \"../../lib/nanovg/src/nanovg_gl_utils.h\"
 

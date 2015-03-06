@@ -97,8 +97,8 @@ void nvgDeleteInternal(NVGcontext* ctx);
 NVGparams* nvgInternalParams(NVGcontext* ctx);
 void nvgDebugDumpPathCache(NVGcontext* ctx);"""
 
-nanovg_gl_h = """NVGcontext* nvgCreateGLES3(int flags);
-void nvgDeleteGLES3(NVGcontext* ctx);
+nanovg_gl_h = """NVGcontext* nvgCreateGLES2(int flags);
+void nvgDeleteGLES2(NVGcontext* ctx);
 int nvglCreateImageFromHandle(NVGcontext* ctx, GLuint textureId, int w, int h, int flags);
 GLuint nvglImageHandle(NVGcontext* ctx, int image);"""
 
@@ -144,7 +144,7 @@ def translate_parameter(type_):
     return ctypes_type
 
 def return_optional_pointer(name, return_):
-    if name == 'nvgCreateGLES3':
+    if name == 'nvgCreateGLES2':
         return 'ptr_opt context'
     else:
         return return_

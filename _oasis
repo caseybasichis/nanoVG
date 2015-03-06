@@ -41,8 +41,8 @@ Flag build_example
   Description:  Build example
   Default:      false
 
-Executable example_gles3
-  MainIs:         example_gles3.ml
+Executable example_gles2
+  MainIs:         example_gles2.ml
   Install:        false
   Build:          true
   Build$:         flag(build_example)

@@ -1,5 +1,5 @@
 # OASIS_START
-# DO NOT EDIT (digest: 1cf612138db751dffa82179341e29f83)
+# DO NOT EDIT (digest: 3cbf1e78e7b706699a9eaee0630a3e75)
 # Ignore VCS directories, you can use the same kind of rule outside
 # OASIS_START/STOP if you want to exclude directories that contains
 # useless stuff for the build process
@@ -32,13 +32,13 @@ true: annot, bin_annot
 # Executable ffi_stubgen
 "src/ffi_stubgen.byte": package(ctypes.stubs)
 <src/*.ml{,i,y}>: package(ctypes.stubs)
-# Executable example_gles3
-"examples/example_gles3.native": oasis_executable_example_gles3_cclib
-"examples/example_gles3.native": package(ctypes)
-"examples/example_gles3.native": package(ctypes.foreign)
-"examples/example_gles3.native": package(ctypes.stubs)
-"examples/example_gles3.native": package(threads)
-"examples/example_gles3.native": use_nanovg_ocaml
+# Executable example_gles2
+"examples/example_gles2.native": oasis_executable_example_gles2_cclib
+"examples/example_gles2.native": package(ctypes)
+"examples/example_gles2.native": package(ctypes.foreign)
+"examples/example_gles2.native": package(ctypes.stubs)
+"examples/example_gles2.native": package(threads)
+"examples/example_gles2.native": use_nanovg_ocaml
 <examples/*.ml{,i,y}>: package(ctypes)
 <examples/*.ml{,i,y}>: package(ctypes.foreign)
 <examples/*.ml{,i,y}>: package(ctypes.stubs)
@@ -47,4 +47,4 @@ true: annot, bin_annot
 # OASIS_STOP
 
 <lib/**> : not_hygienic
-<examples/example_gles3.native> : link_with_nanovg, link_examples_objs
+<examples/example_gles2.native> : link_with_nanovg, link_examples_objs

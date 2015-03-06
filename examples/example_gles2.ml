@@ -36,7 +36,7 @@ let () =
   glfwSetErrorCallback errorcb |> ignore;
 
   glfwWindowHint GLFW.client_api GLFW.opengl_es_api;
-  glfwWindowHint GLFW.context_version_major 3;
+  glfwWindowHint GLFW.context_version_major 2;
   glfwWindowHint GLFW.context_version_minor 0;
 
   let window =
@@ -50,7 +50,7 @@ let () =
       glfwSetKeyCallback window key |> ignore;
       glfwMakeContextCurrent window;
       let vg =
-        try Nvg.createGLES3 (Nvg.antialias lor Nvg.stencil_strokes lor Nvg.debug)
+        try Nvg.createGLES2 (Nvg.antialias lor Nvg.stencil_strokes lor Nvg.debug)
         with Nvg.Memory_error -> begin
             Printf.printf "Could not init nanovg.\n%!";
             exit (-1)
@@ -120,7 +120,7 @@ let () =
 
       Demo.freeDemoData vg (Ct.addr data);
 
-      Nvg.deleteGLES3 vg;
+      Nvg.deleteGLES2 vg;
 
       glfwTerminate ();
     end
