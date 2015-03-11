@@ -12,10 +12,9 @@ let () =
 
   with_formatter "src/nanovg_stubs.c" (fun fmt ->
     Format.pp_print_string fmt "\
-      #define GLFW_INCLUDE_ES3\n\
-      #include <GLFW/glfw3.h>\n\
-      #include <nanovg.h>\n\
+      #include <GLES2/gl2.h>\n\
       #define NANOVG_GLES2_IMPLEMENTATION\n\
+      #include <nanovg.h>\n\
       #include <nanovg_gl.h>\n\
       #include <nanovg_gl_utils.h>\n\
     ";
