@@ -2,7 +2,6 @@ opam-version: "1.1"
 name: "nanovg"
 version: "1.0"
 maintainer: "whitequark@whitequark.org"
-homepage: "http://erratique.ch/software/tgls"
 authors: ["Paolo Donadeo <p.donadeo@4sigma.it>"]
 dev-repo: "git@github.com:caseybasichis/nanoVG.git"
 bug-reports: "https://github.com/caseybasichis/nanoVG/issues"
