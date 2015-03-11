@@ -1,0 +1,9 @@
+doc: [
+  "_build/NANOVG_LICENSE.txt" {"NANOVG_LICENSE.txt"}
+  "_build/README.md" {"README.md"} ]
+lib: [
+  "_build/pkg/META" {"META"}
+  "_build/src/nanovg.a" {"nanovg.a"}
+  "_build/src/nanovg.cma" {"nanovg.cma"}
+  "_build/src/nanovg.cmxa" {"nanovg.cmxa"}
+  "_build/src/nanovg.cmxs" {"nanovg.cmxs"} ]

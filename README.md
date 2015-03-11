@@ -1,2 +1,3 @@
 # nanoVG
-nanoVG binding for OCaml
+
+nanoVG bindings for OCaml
