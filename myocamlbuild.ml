@@ -24,9 +24,12 @@ let () =
         "src_nanovg/stb_truetype.h";
       ];
 
-      dep ["ocaml"; "link"; "use_nanovg"] & ["src/libnanovg_stubs.a"];
+      flag ["ocaml"; "link"; "library"; "byte"; "use_nanovg"] & S[A"-dllib"; A"-lnanovg_stubs"];
+      flag ["ocaml"; "link"; "library"; "native"; "use_nanovg"] & S[A"-cclib"; A"-Lsrc -lnanovg_stubs"];
 
       (* Examples *)
+
+      dep ["ocaml"; "link"; "program"; "use_nanovg"] & ["src/libnanovg_stubs.a"];
 
       flag ["ocaml"; "link"; "use_glfw"] & S[A"-cclib"; A"-lGL -lglfw"];
 
