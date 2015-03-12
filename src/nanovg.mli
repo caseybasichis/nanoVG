@@ -7,45 +7,54 @@ val context : context structure typ
 
 type color
 val color : color structure typ
-val r : (float, color structure) field
-val g : (float, color structure) field
-val b : (float, color structure) field
-val a : (float, color structure) field
+module Color : sig
+  val r : (float, color structure) field
+  val g : (float, color structure) field
+  val b : (float, color structure) field
+  val a : (float, color structure) field
+end
 
 type paint
 val paint : paint structure typ
-val xform : (float carray, paint structure) field
-val extent :
-  (float carray, paint structure) field
-val radius : (float, paint structure) field
-val feather : (float, paint structure) field
-val inner_color :
-  (color structure, paint structure) field
-val outer_color :
-  (color structure, paint structure) field
-val image : (int, paint structure) field
+module Paint : sig
+  val xform : (float carray, paint structure) field
+  val extent : (float carray, paint structure) field
+  val radius : (float, paint structure) field
+  val feather : (float, paint structure) field
+  val inner_color : (color structure, paint structure) field
+  val outer_color : (color structure, paint structure) field
+  val image : (int, paint structure) field
+end
 
 type glyph_position
 val glyph_position : glyph_position structure typ
-val str : (string, glyph_position structure) field
-val x : (float, glyph_position structure) field
+module Glyph_position : sig
+  val str : (string, glyph_position structure) field
+  val x : (float, glyph_position structure) field
+end
 
 type text_row
 val text_row : text_row structure typ
-val start : (string, text_row structure) field
-val end_ : (string, text_row structure) field
-val next : (string, text_row structure) field
-val width : (float, text_row structure) field
-val minx : (float, text_row structure) field
-val maxx : (float, text_row structure) field
+module Text_row : sig
+  val start : (string, text_row structure) field
+  val end_ : (string, text_row structure) field
+  val next : (string, text_row structure) field
+  val width : (float, text_row structure) field
+  val minx : (float, text_row structure) field
+  val maxx : (float, text_row structure) field
+end
 
 type params
 val params : params structure typ
-val user_ptr : (unit ptr, params structure) field
+module Params : sig
+  val user_ptr : (unit ptr, params structure) field
+end
 
-val antialias : int
-val stencil_strokes : int
-val debug : int
+module Create_flags : sig
+  val antialias : int
+  val stencil_strokes : int
+  val debug : int
+end
 
 val begin_frame :
   context structure ptr -> int -> int -> float -> unit

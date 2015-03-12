@@ -3,10 +3,11 @@ open Unsigned
 
 include Nanovg_bindings.C(Nanovg_generated)
 
-(* TODO: how to bind constants? *)
-let antialias       = 1 lsl 0
-let stencil_strokes = 1 lsl 1
-let debug           = 1 lsl 2
+module Create_flags = struct
+  let antialias       = 1 lsl 0
+  let stencil_strokes = 1 lsl 1
+  let debug           = 1 lsl 2
+end
 
 exception Memory_error
 

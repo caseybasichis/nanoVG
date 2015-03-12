@@ -9,44 +9,54 @@ struct
 
   type color
   let color : color structure typ = structure "NVGcolor"
-  let r = field color "r" float
-  let g = field color "g" float
-  let b = field color "b" float
-  let a = field color "a" float
+  module Color = struct
+    let r = field color "r" float
+    let g = field color "g" float
+    let b = field color "b" float
+    let a = field color "a" float
+  end
   let () = seal color
 
   type paint
   let paint : paint structure typ = structure "NVGpaint"
-  let xform = field paint "xform" (array 6 float)
-  let extent = field paint "extent" (array 2 float)
-  let radius = field paint "radius" float
-  let feather = field paint "feather" float
-  let inner_color = field paint "innerColor" color
-  let outer_color = field paint "outerColor" color
-  let image = field paint "image" int
+  module Paint = struct
+    let xform = field paint "xform" (array 6 float)
+    let extent = field paint "extent" (array 2 float)
+    let radius = field paint "radius" float
+    let feather = field paint "feather" float
+    let inner_color = field paint "innerColor" color
+    let outer_color = field paint "outerColor" color
+    let image = field paint "image" int
+  end
   let () = seal paint
 
   type glyph_position
   let glyph_position : glyph_position structure typ = structure "NVGglyphPosition"
-  let str = field glyph_position "str" string
-  let x = field glyph_position "x" float
-  let minx = field glyph_position "minx" float
-  let maxx = field glyph_position "maxx" float
+  module Glyph_position = struct
+    let str = field glyph_position "str" string
+    let x = field glyph_position "x" float
+    let minx = field glyph_position "minx" float
+    let maxx = field glyph_position "maxx" float
+  end
   let () = seal glyph_position
 
   type text_row
   let text_row : text_row structure typ = structure "NVGtextRow"
-  let start = field text_row "start" string
-  let end_ = field text_row "end" string
-  let next = field text_row "next" string
-  let width = field text_row "width" float
-  let minx = field text_row "minx" float
-  let maxx = field text_row "maxx" float
+  module Text_row = struct
+    let start = field text_row "start" string
+    let end_ = field text_row "end" string
+    let next = field text_row "next" string
+    let width = field text_row "width" float
+    let minx = field text_row "minx" float
+    let maxx = field text_row "maxx" float
+  end
   let () = seal text_row
 
   type params
   let params : params structure typ = structure "NVGparams"
-  let user_ptr = field params "userPtr" (ptr void)
+  module Params = struct
+    let user_ptr = field params "userPtr" (ptr void)
+  end
   let () = seal params
 
   let begin_frame = foreign "nvgBeginFrame"
