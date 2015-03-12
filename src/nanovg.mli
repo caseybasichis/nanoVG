@@ -4,6 +4,7 @@ exception Memory_error
 
 type context
 val context : context structure typ
+
 type color
 val color : color structure typ
 val r : (float, color structure) field
@@ -52,28 +53,23 @@ val cancel_frame :
   context structure ptr -> unit
 val end_frame :
   context structure ptr -> unit
-val rgb :
-  Unsigned.uchar ->
-   Unsigned.uchar -> Unsigned.uchar -> color structure
+val rgb : int -> int -> int -> color structure
 val rgbf :
   float -> float -> float -> color structure
-val rgba :
-  Unsigned.uchar ->
-   Unsigned.uchar ->
-   Unsigned.uchar -> Unsigned.uchar -> color structure
+val rgba : int -> int -> int -> int -> color structure
 val rgbaf :
   float -> float -> float -> float -> color structure
 val lerp_rgba :
   color structure ->
    color structure -> float -> color structure
 val trans_rgba :
-  color structure -> Unsigned.uchar -> color structure
+  color structure -> int -> color structure
 val trans_rgbaf :
   color structure -> float -> color structure
 val hsl :
   float -> float -> float -> color structure
 val hsla :
-  float -> float -> float -> Unsigned.uchar -> color structure
+  float -> float -> float -> int -> color structure
 val save :
   context structure ptr -> unit
 val restore :
