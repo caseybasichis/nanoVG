@@ -25,7 +25,7 @@ let () =
       ];
 
       flag ["ocaml"; "link"; "library"; "byte"; "use_nanovg"] & S[A"-dllib"; A"-lnanovg_stubs"];
-      flag ["ocaml"; "link"; "library"; "native"; "use_nanovg"] & S[A"-cclib"; A"-Lsrc -lnanovg_stubs"];
+      flag ["ocaml"; "link"; "library"; "use_nanovg"] & S[A"-cclib"; A"-Lsrc -lnanovg_stubs"];
 
       (* Examples *)
 
