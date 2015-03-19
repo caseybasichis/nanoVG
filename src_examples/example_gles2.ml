@@ -49,7 +49,8 @@ let () =
       glfwSetKeyCallback window key |> ignore;
       glfwMakeContextCurrent window;
       let vg =
-        try Nanovg.create_gles2 (Nanovg.antialias lor Nanovg.stencil_strokes lor Nanovg.debug)
+        let open Nanovg.Create_flags in
+        try Nanovg.create_gles2 (antialias lor stencil_strokes lor debug)
         with Nanovg.Memory_error -> begin
             Printf.printf "Could not init nanovg.\n%!";
             exit (-1)
