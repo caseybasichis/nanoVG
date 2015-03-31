@@ -44,12 +44,6 @@ module Text_row : sig
   val maxx : (float, text_row structure) field
 end
 
-type params
-val params : params structure typ
-module Params : sig
-  val user_ptr : (unit ptr, params structure) field
-end
-
 module Create_flags : sig
   val antialias : int
   val stencil_strokes : int
@@ -287,14 +281,8 @@ val text_break_lines :
    string ->
    string ->
    float -> text_row structure ptr -> int -> int
-val create_internal :
-  params structure ptr ->
-   context structure ptr
 val delete_internal :
   context structure ptr -> unit
-val internal_params :
-  context structure ptr ->
-   params structure ptr
 val debug_dump_path_cache :
   context structure ptr -> unit
 val create_gles2 : int -> context structure ptr
