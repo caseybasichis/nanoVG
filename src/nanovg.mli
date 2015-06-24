@@ -285,8 +285,8 @@ val delete_internal :
   context structure ptr -> unit
 val debug_dump_path_cache :
   context structure ptr -> unit
-val create_gles2 : int -> context structure ptr
-val delete_gles2 :
+val create_gl3 : int -> context structure ptr
+val delete_gl3 :
   context structure ptr -> unit
 val gl_create_image_from_handle :
   context structure ptr ->
