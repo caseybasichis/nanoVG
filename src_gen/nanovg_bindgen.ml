@@ -12,7 +12,15 @@ let () =
 
   with_formatter "src/nanovg_stubs.c" (fun fmt ->
     Format.pp_print_string fmt "\
-      #include <GLES2/gl2.h>\n\
+      #if defined(__APPLE__)\n\
+      #include <OpenGL/gl.h>\n\
+      #include <OpenGL/gl3.h>\n\
+      #include <OpenGL/glu.h>\n\
+      #include <OpenGL/glext.h>\n\
+      #include <GLUT/glut.h>\n\
+      #else\n\
+      #include <GL/gl.h>\n\
+      #endif\n\
       #define NANOVG_GLES2_IMPLEMENTATION\n\
       #include <nanovg.h>\n\
       #include <nanovg_gl.h>\n\
