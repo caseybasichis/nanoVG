@@ -1,6 +1,6 @@
 version = "%{version}%"
 description = "NanoVG is a small antialiased vector graphics rendering library for OpenGL"
-requires = "tgls.tgles2 ctypes.stubs"
+requires = "tgls.tgl3 ctypes.stubs"
 archive(byte) = "nanovg.cma"
 archive(byte, plugin) = "nanovg.cma"
 archive(native) = "nanovg.cmxa"

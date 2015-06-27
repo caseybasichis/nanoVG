@@ -21,7 +21,8 @@ let () =
       #else\n\
       #include <GL/gl.h>\n\
       #endif\n\
-      #define NANOVG_GLES2_IMPLEMENTATION\n\
+      
+      #define NANOVG_GL3_IMPLEMENTATION\n\
       #include <nanovg.h>\n\
       #include <nanovg_gl.h>\n\
       #include <nanovg_gl_utils.h>\n\

@@ -338,10 +338,10 @@ struct
   let debug_dump_path_cache = foreign "nvgDebugDumpPathCache"
       (ptr context @-> returning void)
 
-  let create_gles2 = foreign "nvgCreateGLES2"
+  let create_gl3 = foreign "nvgCreateGL3"
       (int @-> returning (ptr_opt context))
 
-  let delete_gles2 = foreign "nvgDeleteGLES2"
+  let delete_gl3 = foreign "nvgDeleteGL3"
       (ptr context @-> returning void)
 
   let gl_create_image_from_handle = foreign "nvglCreateImageFromHandle"

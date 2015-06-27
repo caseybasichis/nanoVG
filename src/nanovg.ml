@@ -23,7 +23,7 @@ let trans_rgba c a =
 let hsla h s l a =
   hsla h s l (UChar.of_int a)
 
-let create_gles2 flags =
-  match create_gles2 flags with
+let create_gl3 flags =
+  match create_gl3 flags with
   | Some x -> x
   | None -> raise Memory_error
