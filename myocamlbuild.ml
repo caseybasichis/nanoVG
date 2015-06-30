@@ -12,7 +12,7 @@ let () =
           Cmd (A(env "src_gen/nanovg_bindgen.byte")));
 
       (* http://caml.inria.fr/mantis/view.php?id=6794 *)
-      flag ["c"; "compile"; "use_ctypes"] & S[A"-I"; A"+../ctypes"];
+      flag ["c"; "compile"; "use_ctypes"] & S[A"-package"; A"ctypes"];
 
       flag ["c"; "compile"; "use_nanovg"] & S[A"-I"; A"src_nanovg"];
       dep ["c"; "compile"; "use_nanovg"] & [
